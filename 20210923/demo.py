@@ -11,14 +11,11 @@ def tokenize(text):
         
     return tokens
 
-def calculate_frequency(tokens, frequency=None):
-    if frequency == None:
-        frequency = {}
+def calculate_frequency(tokens):
+    frequency = {}
     for t in tokens:
-        try:
-            frequency[t] += 1
-        except:
-            frequency[t] = 1
+        frequency[t] = 1
+
     """
     Sample output: 
     {
@@ -43,11 +40,16 @@ def get_ngram(tokens, n=2):
 file_path = os.path.join('./data', 'BAWE.txt')
 BAWE_unigram = []
 #### [ TODO ] calculate document frequency of unigram in BAWE
-frequency = {}
+BAWE_frequency = {}
 with open(file_path, 'r') as f:
     for text in f.readlines():
         for sen in text.split("."):
-            BAWE_frequency = calculate_frequency(tokenize(sen), frequency)
+            frequency = calculate_frequency(tokenize(sen))
+            for b in frequency:
+                try:
+                    BAWE_frequency[b] += 1
+                except:
+                    BAWE_frequency[b] = 1
 
 # Read Web1T Data
 file_path = os.path.join('data', 'Web1T_unigram.txt')
@@ -148,4 +150,3 @@ for k in sorted_ranking_ratio_bi:
     rank += 1
     if rank > 30:
         break
-pdb.set_trace()
