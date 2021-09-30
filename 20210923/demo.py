@@ -99,10 +99,16 @@ for k in sorted_ranking_ratio:
 #### [TODO]
 file_path = os.path.join('./data', 'BAWE.txt')
 #### [ TODO ] calculate document frequency of bigram in BAWE
-frequency = {}
+BAWE_frequency_bigram = {}
 with open(file_path, 'r') as f:
     for text in f.readlines():
-        BAWE_frequency_bigram = calculate_frequency(get_ngram(tokenize(text), n=2), frequency)
+        for sen in text.split("."):
+            frequency = calculate_frequency(get_ngram(tokenize(sen), n=2))
+            for b in frequency:
+                try:
+                    BAWE_frequency_bigram[b] += 1
+                except:
+                    BAWE_frequency_bigram[b] = 1
 
 # Read Web1T Data
 file_path = os.path.join('data', 'Web1T_bigram.txt')
@@ -111,6 +117,7 @@ with open(file_path, 'r') as f:
     for line in f.readlines():
         line=line.rstrip("\n").split("\t")
         Web1T_bigram_counter[line[0]] = int(line[1])
+
 
 Web1T_bigram_Rank = {}
 #### [ TODO ] Rank bigrams for Web1T
