@@ -58,6 +58,7 @@ def sentence_prob(uni_freq, bi_freq, sentence: str, P):
         a = P(uni_freq, bi_freq, words[i], words[i-1])
         # print("P({}|{}) = {}".format(words[i], words[i-1], a))
         sen_prob += np.log(a + 1e-20)
+        print(np.log(a + 1e-20))
 
     return sen_prob
 
